@@ -122,6 +122,28 @@
         - `edge-pair coverage` → `edge coverage` → `node coverage`.
     - **prime path coverage** also subsumes edge coverage.
 
+### Structural Coverage Subsumption Hierarchy
+
+The following diagram shows how structural coverage criteria relate to each other. An arrow from criterion A to criterion B means that A subsumes B (satisfying A automatically satisfies B).
+
+```mermaid
+graph TD
+    CPC[Complete Path Coverage] --> PPC[Prime Path Coverage]
+    PPC --> EPC[Edge Pair Coverage]
+    PPC --> CRTC[Complete Round Trip Coverage]
+    EPC --> EC[Edge Coverage]
+    CRTC --> SRTC[Simple Round Trip Coverage]
+    EC --> NC[Node Coverage]
+    
+    style CPC fill:#e1f5ff,color:#000
+    style PPC fill:#b3e0ff,color:#000
+    style EPC fill:#80ccff,color:#000
+    style CRTC fill:#80ccff,color:#000
+    style EC fill:#4db8ff,color:#000
+    style SRTC fill:#4db8ff,color:#000
+    style NC fill:#1a8cff,color:#000
+```
+
 ## algorithms for generating test paths
 
 - this section covers the process for finding test requirements (tr) and then creating a set of test paths to satisfy them.
