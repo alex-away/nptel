@@ -71,8 +71,7 @@ graph TD
     AUC --> EC[Edge Coverage]
     EPC --> EC
     CRTC --> SRTC[Simple Round Trip Coverage]
-    ADC --> NC[Node Coverage]
-    EC --> NC
+    EC --> NC[Node Coverage]
     
     style CPC fill:#e1f5ff,color:#000
     style PPC fill:#b3e0ff,color:#000
