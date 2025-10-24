@@ -320,3 +320,44 @@ void dumb(Vector v) {
 - **State Defined Incorrectly (SDI)**: Overriding method computes the same state variable differently/incorrectly.
 
 - **Indirect Inconsistent State Definition (IISD)**: A *new* (extension) method in a descendant defines an inherited state variable, potentially causing inconsistencies.
+
+
+## 7. OO Data Flow Coverage Criteria
+
+These criteria extend data flow testing to handle polymorphism and inheritance. They build upon **Coupling Sequences** (potential def-use interactions between method calls on the same object).
+
+### I. Criteria Ignoring Polymorphism
+
+These are simpler but less thorough for OO.
+
+- **ACS (All Coupling Sequences)**
+  - **Goal**: Execute at least one coupling path (def to use via state variable) for *each* coupling sequence identified in the code.
+  - **Weakness**: Doesn't care *which version* of a method runs due to polymorphism.
+
+- **ACDU (All Coupling Defs and Uses)**
+  - **Goal**: For each coupling sequence, execute paths covering *every* last-definition to *every* first-use of the relevant state variables.
+  - **Weakness**: Still ignores polymorphism.
+
+### II. Criteria Considering Polymorphism
+
+These are stronger and specifically designed for OO.
+
+- **APC (All Poly Classes)**
+  - **Goal**: For each coupling sequence, execute at least one coupling path for *every possible class (type binding)* that could be involved due to polymorphism.
+  - **Focus**: Ensures all relevant *class interactions* are tested.
+
+- **APDU (All Poly Def-Uses)**
+  - **Goal**: The strongest criterion. For each coupling sequence, AND for *every possible class binding*, execute paths covering *every* last-def to *every* first-use.
+  - **Combines**: The thoroughness of ACDU with the polymorphism-awareness of APC.
+
+### III. Subsumption Hierarchy for OO Coupling Criteria
+
+```mermaid
+graph TD
+    APDU[All Poly-Coupling Defs and Uses] --> APC[All Poly Classes]
+    APDU --> ACDU[All Coupling Defs and Uses]
+    APC --> ACS[All Coupling Sequences]
+    ACDU --> ACS
+```
+
+- **Think of it like this**: ACS is the baseline (test each coupling sequence once). ACDU adds thoroughness (test all def-use pairs). APC adds polymorphism awareness (test all class types). APDU combines both for maximum coverage.
